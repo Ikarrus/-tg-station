@@ -1,0 +1,16 @@
+"a" = (/turf/simulated/floor/plating/asteroid,/area/ruins)
+"b" = (/turf/simulated/wall/mineral/clown,/area/ruins)
+"c" = (/mob/living/simple_animal/slaughter,/turf/simulated/floor/plating/asteroid,/area/ruins)
+
+(1,1,1) = {"
+aaaaaaaaba
+aaaaaaaaba
+aaaabaaaba
+abbbbbbbbb
+aaaabaaaba
+aaaabacaba
+aaaabaaaba
+aaaabaaaba
+aaaabaaaaa
+aaaaaaaaaa
+"}

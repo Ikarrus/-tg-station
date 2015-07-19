@@ -1,0 +1,18 @@
+"a" = (/turf/simulated/wall,/area/awaymission/spacebattle/cruiser)
+"b" = (/obj/structure/table/wood,/obj/machinery/microwave,/turf/simulated/floor/wood,/area/awaymission/spacebattle/cruiser)
+"c" = (/obj/machinery/light/built{tag = "icon-tube1 (NORTH)"; icon_state = "tube1"; dir = 1},/turf/simulated/floor/wood,/area/awaymission/spacebattle/cruiser)
+"d" = (/obj/structure/stool/bed/chair/comfy,/turf/simulated/floor/wood,/area/awaymission/spacebattle/cruiser)
+"e" = (/obj/structure/table/wood,/obj/item/weapon/storage/box/donkpockets,/turf/simulated/floor/wood,/area/awaymission/spacebattle/cruiser)
+"f" = (/turf/simulated/floor/wood,/area/awaymission/spacebattle/cruiser)
+"g" = (/obj/structure/table/wood,/obj/item/weapon/storage/pill_bottle/dice,/turf/simulated/floor/wood,/area/awaymission/spacebattle/cruiser)
+"h" = (/obj/machinery/sleeper{dir = 4; icon_state = "sleeper-open"},/turf/simulated/floor/wood,/area/awaymission/spacebattle/cruiser)
+"i" = (/obj/structure/stool/bed/chair/comfy{tag = "icon-comfychair (NORTH)"; icon_state = "comfychair"; dir = 1},/turf/simulated/floor/wood,/area/awaymission/spacebattle/cruiser)
+"j" = (/obj/machinery/door/airlock/glass,/turf/simulated/floor/wood{blocks_air = 1},/area/awaymission/spacebattle/cruiser)
+
+(1,1,1) = {"
+aaaaa
+abcda
+aefga
+ahfia
+aajaa
+"}

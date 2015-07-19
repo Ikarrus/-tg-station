@@ -10,7 +10,7 @@ var/global/list/rockTurfEdgeCache
 	name = "rock"
 	icon = 'icons/turf/mining.dmi'
 	icon_state = "rock_nochance"
-	baseturf = /turf/simulated/floor/plating/asteroid
+	baseturf = /turf/simulated/floor/plating/chasm
 	oxygen = 0
 	nitrogen = 0
 	opacity = 1
@@ -391,7 +391,7 @@ var/global/list/rockTurfEdgeCache
 		return
 
 	SpawnMonster(T)
-	var/turf/simulated/floor/t = new /turf/simulated/floor/plating/asteroid/airless(T)
+	var/turf/simulated/floor/t = new /turf/simulated/floor/plating/asteroid(T)
 	spawn(2)
 		t.fullUpdateMineralOverlays()
 
@@ -628,6 +628,47 @@ var/global/list/rockTurfEdgeCache
 /turf/proc/fullUpdateMineralOverlays()
 	for (var/turf/t in range(1,src))
 		t.updateMineralOverlays()
+
+
+
+///Chasm
+
+/turf/simulated/floor/plating/chasm
+	name = "chasm"
+	desc = "Watch your step!"
+	icon = 'icons/turf/floors/chasm.dmi'
+	icon_state = "chasm"
+	canSmoothWith = list(/turf/simulated/floor/plating/chasm)
+	smooth = 1
+	baseturf = /turf/simulated/floor/plating/chasm
+
+/turf/simulated/floor/plating/chasm/New()
+	..()
+	spawn(1)
+		update_icon()
+
+/turf/simulated/floor/plating/chasm/update_icon()
+	if(smooth)
+		smooth_icon(src)
+		smooth_icon_neighbors(src)
+
+
+/turf/simulated/floor/plating/chasm/Entered(atom/movable/A)
+	if(istype (A, /obj/item/projectile))
+		return
+	visible_message("<span class='danger'><b>[A] falls into the [src]!</b>")
+	if(src.z+1 > world.maxz) //Fall outta the world
+		qdel(A)
+	else
+		A.loc = locate(A.x, A.y, A.z+1)
+		A.visible_message("<span class='danger'><b>[A] falls from above!</b>")
+		if(istype(A, /mob/living))
+			var/mob/living/L = A
+			L.adjustBruteLoss(50)
+
+/turf/simulated/floor/plating/chasm/attackby()
+	return
+
 
 
 #undef NORTH_EDGING

@@ -1,0 +1,30 @@
+"a" = (/turf/simulated/floor/plating/asteroid,/area/ruins)
+"b" = (/turf/simulated/floor/plating/lava,/area/ruins)
+"c" = (/turf/simulated/wall/mineral/diamond,/area/ruins)
+"d" = (/turf/simulated/floor/plating/abductor,/area/ruins)
+"e" = (/mob/living/simple_animal/construct/armored,/turf/simulated/floor/plating/abductor,/area/ruins)
+"f" = (/obj/structure/lamarr,/turf/simulated/floor/plating/abductor,/area/ruins)
+"g" = (/mob/living/simple_animal/cow,/turf/simulated/floor/plating/abductor,/area/ruins)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaabbbbbbaaa
+aaaaaaaaaaaabbbbbaaa
+aaaaaacccccccccbbaaa
+aaaaaacddddddddcbaaa
+aaaaaacddddddddcbaaa
+aaaaaaccdeddcccaaaaa
+acccccccddddcaaacccc
+acdddddddfddcaaacddc
+acddddddddddcaaacddc
+acdddddddddgcccccddc
+acccddccddddcccccddc
+aaacddccccccccdddddc
+aaacddcaaaaaacdddddc
+aaacddcaaaaaacdddddc
+aaacddcaaaaaacdddddc
+aaacddcaaaaaaccccccc
+aaaccccaaaaaaaaaaaaa
+"}

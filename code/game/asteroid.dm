@@ -2,7 +2,7 @@ var/global/list/possiblethemes = list("organharvest","cult","wizden","cavein","x
 
 var/global/max_secret_rooms = 6
 
-/proc/spawn_room(var/atom/start_loc, var/x_size, var/y_size, var/list/walltypes, var/floor, var/name)
+/proc/spawn_room(var/atom/start_loc, var/x_size, var/y_size, var/list/walltypes, var/floor, var/name, var/survival)
 	var/list/room_turfs = list("walls"=list(),"floors"=list())
 
 	for(var/x = 0, x < x_size, x++)		//sets the size of the room on the x axis
@@ -31,7 +31,6 @@ var/global/max_secret_rooms = 6
 				room_turfs["floors"] += T
 
 			A.contents += T
-
 	return room_turfs
 
 //////////////
@@ -206,3 +205,174 @@ var/global/max_secret_rooms = 6
 			//world.log << "The [theme] themed [T.loc] has been created!"
 
 	return 1
+
+
+/////////PLANET
+
+/obj/effect/landmark/river_waypoint
+	var/connected = 0
+
+/proc/createLavaRivers()
+	var/list/river_nodes = list()
+	var/max = rand(3,5)
+	var/num_spawned = 0
+	while(num_spawned <= max)
+		var/turfs = get_area_turfs(/area/mine/unexplored)
+		var/turf/simulated/A = pick(turfs)
+
+	//	var/turf/simulated/A = locate(rand(18, 220), rand(18, 220), 7)
+	//	if(!istype(A))
+	//		continue
+		river_nodes.Add(new /obj/effect/landmark/river_waypoint(A))
+		num_spawned++
+
+	//make some randomly pathing rivers
+	for(var/obj/effect/landmark/river_waypoint/W in landmarks_list)
+		if (W.z != 7 || W.connected)
+			continue
+
+		W.connected = 1
+		var/turf/simulated/floor/plating/lava/cur_turf = new /turf/simulated/floor/plating/lava(get_turf(W))
+		var/turf/target_turf = get_turf(pick(river_nodes))
+
+		var/detouring = 0
+		var/cur_dir = get_dir(cur_turf, target_turf)
+		//
+		while(cur_turf != target_turf)
+			//randomly snake around a bit
+			if(detouring)
+				if(prob(20))
+					detouring = 0
+					cur_dir = get_dir(cur_turf, target_turf)
+			else if(prob(20))
+				detouring = 1
+				if(prob(50))
+					cur_dir = turn(cur_dir, 45)
+				else
+					cur_dir = turn(cur_dir, -45)
+			else
+				cur_dir = get_dir(cur_turf, target_turf)
+
+			cur_turf = get_step(cur_turf, cur_dir)
+
+			var/skip = 0
+
+			var/validturf = FALSE
+			if(istype(cur_turf, /turf/simulated/floor/plating/asteroid))
+				validturf = TRUE
+			if(istype(cur_turf, /turf/simulated/mineral))
+				validturf = TRUE
+
+			if(!validturf)
+				detouring = 0
+				cur_dir = get_dir(cur_turf, target_turf)
+				cur_turf = get_step(cur_turf, cur_dir)
+				continue
+
+			if(!skip)
+				cur_turf.ChangeTurf(/turf/simulated/floor/plating/lava)
+				if(istype(cur_turf, /turf/simulated/floor/plating/lava))
+					cur_turf.Spread(75, rand(65, 20))
+
+
+
+
+/turf/simulated/floor/plating/lava/proc/Spread(var/probability = 50, var/probabilityloss = 50)
+	if(probability <= 0)
+		return
+
+	//world << "\blue Spread([probability])"
+	for(var/turf/simulated/A in orange(1, src))
+		if(istype(A, /turf/simulated/floor/plating/asteroid) || istype(A, /turf/simulated/mineral))
+			var/turf/simulated/floor/plating/lava/P = new /turf/simulated/floor/plating/lava(A)
+
+			if(P && prob(probability))
+				P.Spread(probability - probabilityloss)
+
+
+
+
+
+///RUIN
+
+var/global/list/potentialRuins = list()
+
+/proc/getRuinList()
+	var/list/Lines = file2list("_maps/randomruin/fileList.txt")
+	if(!Lines.len)	return
+	for (var/t in Lines)
+		if (!t)
+			continue
+
+		t = trim(t)
+		if (length(t) == 0)
+			continue
+		else if (copytext(t, 1, 2) == "#")
+			continue
+
+		var/pos = findtext(t, " ")
+		var/name = null
+	//	var/value = null
+
+		if (pos)
+			name = lowertext(copytext(t, 1, pos))
+		//	value = copytext(t, pos + 1)
+		else
+			name = lowertext(t)
+
+		if (!name)
+			continue
+		world << "<span class='boldannounce'>Ruin added to list.</span>"
+		potentialRuins.Add(t)
+
+
+/proc/seedRandomRuins()
+	var/max = 3
+	var/num_spawned = 0
+	var/list/turfs = null
+	while(num_spawned <= max)
+		var/spawnturfs = get_area_turfs(/area/mine/unexplored)
+		var/turf/simulated/A = pick(spawnturfs)
+		new /obj/effect/landmark/randomruin(A)
+		num_spawned++
+	turfs = get_area_turfs(/area/ruins/)
+	for(var/turf/T in turfs)
+		T.baseturf = /turf/simulated/floor/plating/asteroid
+
+/obj/effect/landmark/randomruin
+	name = "random ruin"
+
+/obj/effect/landmark/randomruin/initialize()
+	load()
+
+/obj/effect/landmark/randomruin/New()
+	load()
+
+
+/obj/effect/landmark/randomruin
+
+
+/area/ruins
+	name = "ruins"
+	has_gravity = 1
+
+/obj/effect/landmark/randomruin/proc/load()
+	if(potentialRuins.len)
+		world << "<span class='boldannounce'>Loading random ruin...</span>"
+
+		var/map = pick(potentialRuins)
+		var/file = file(map)
+		var/x_offset = x
+		var/y_offset = y
+
+		if(isfile(file))
+			maploader.load_map(file, x_offset, y_offset, 7)
+			world.log << "Ruin loaded: [map]"
+
+		world << "<span class='boldannounce'>Ruin loaded.</span>"
+		potentialRuins -= map
+
+	else
+		world << "<span class='boldannounce'>No ruins found.</span>"
+		return
+//	qdel(src)

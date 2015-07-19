@@ -160,7 +160,22 @@
 	temperature = TCMB
 
 /turf/simulated/floor/plating/lava
+	icon = 'icons/turf/floors/lava.dmi'
 	icon_state = "lava"
+	smooth = 1
+	luminosity = 3
+	canSmoothWith = list(/turf/simulated/floor/plating/lava, /turf/simulated/mineral, /turf/simulated/floor/plating/asteroid)
+	baseturf = /turf/simulated/floor/plating/lava
+
+/turf/simulated/floor/plating/lava/New()
+	..()
+	spawn(1)
+		update_icon()
+
+/turf/simulated/floor/plating/lava/update_icon()
+	if(smooth)
+		smooth_icon(src)
+		smooth_icon_neighbors(src)
 
 /turf/simulated/floor/plating/abductor
 	name = "alien floor"

@@ -1,0 +1,20 @@
+"a" = (/turf/simulated/floor/plating/asteroid,/area/ruins)
+"b" = (/turf/simulated/floor/noslip,/area/ruins)
+"c" = (/turf/simulated/floor/bluegrid,/area/ruins)
+"d" = (/obj/structure/table/glass,/turf/simulated/floor/plating/asteroid,/area/ruins)
+"e" = (/obj/structure/table/glass,/turf/simulated/floor/noslip,/area/ruins)
+"f" = (/obj/structure/table/glass,/turf/simulated/floor/bluegrid,/area/ruins)
+"g" = (/mob/living/simple_animal/cow,/turf/simulated/floor/plating/asteroid,/area/ruins)
+
+(1,1,1) = {"
+aaaabaaaaaaaaaaaaaaaaaacccaaaaaaaaaaaaaaaaaddddaaa
+abbebaadddddaaaaaaaaaaaaaafffdddddddaaaaaaaddddaaa
+abbbaaaaaaaaaaaaaaaaaaaaaadddfddddddaadaaaaaaaaaaa
+aadaddddffdfddcacafdfdffgadddfffffffaadaaaaaaaaaaa
+ccaaddffddddddaaaaddddffaadddddddddfcadaaaaaaaaaaa
+accadfffffffffccccffffffacfffdddddddcadaaaaaaaaaaa
+aaacdddddfdfdfccccfddfffacccccaacaccccfaaaaaaaaaaa
+aaaafffffdffffccccffdfdfcaaaddagaaddfcdaaaaaaaaaaa
+aaaaddffffffffccaaddfffddaaaddaaaadddadaaaaaaaaaaa
+aaaaaaaaaaaaaaaacacaccccaaaaaaaaaaaaadddaaaaaaaaaa
+"}

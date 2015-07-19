@@ -5,7 +5,8 @@
 	icon_state = "extinguisher_closed"
 	anchored = 1
 	density = 0
-	var/obj/item/weapon/extinguisher/has_extinguisher = new/obj/item/weapon/extinguisher
+	var/storage_type = /obj/item/weapon/extinguisher
+	var/obj/item/weapon/has_extinguisher = new/obj/item/weapon/extinguisher
 	var/opened = 0
 
 
@@ -27,7 +28,7 @@
 /obj/structure/extinguisher_cabinet/attackby(obj/item/O, mob/user, params)
 	if(isrobot(user) || isalien(user))
 		return
-	if(istype(O, /obj/item/weapon/extinguisher))
+	if(istype(O, storage_type))
 		if(!has_extinguisher && opened)
 			if(!user.drop_item())
 				return
@@ -75,6 +76,6 @@
 		if(istype(has_extinguisher, /obj/item/weapon/extinguisher/mini))
 			icon_state = "extinguisher_mini"
 		else
-			icon_state = "extinguisher_full"
+			icon_state = "extinguisher_closed"
 	else
 		icon_state = "extinguisher_empty"

@@ -57,7 +57,10 @@
 	var/obj/item/weapon/card/id/access_card = null	//innate access uses an internal ID card
 	var/flying = 0 //whether it's flying or touching the ground.
 
-/mob/living/simple_animal/New()
+	//Hives/portals/etc for spawning more
+	var/mob/living/simple_animal/hostile/hive/hive = null
+
+/mob/living/simple_animal/New(var/mob/living/simple_animal/hostile/hive/linked_hive)
 	..()
 	verbs -= /mob/verb/observe
 	if(!real_name)
@@ -394,6 +397,9 @@
 	icon_state = icon_dead
 	stat = DEAD
 	density = 0
+	if(hive)
+		hive.mobs -= src
+	hive = null
 	if(!gibbed)
 		visible_message("<span class='danger'>\the [src] stops moving...</span>")
 	..()
