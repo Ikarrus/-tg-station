@@ -9,3 +9,5 @@
 *.lk
 *.int
 *.backup
+*.db
+_maps/randomruin/pod.dmm
